@@ -1,4 +1,6 @@
 import networkx as nx
+#wpisz w konsoli pip install networkx
+
 
 
 
@@ -9,7 +11,7 @@ class Graph:
         self.labels = labels
         self.G = nx.Graph()
         for i, label in enumerate(labels):
-            self.G.add_node(i, label=label)
+            self.G.add_node(i, label = label)
 
         for edge in edges:
             start, end = edge
@@ -18,6 +20,20 @@ class Graph:
             else:
                 print("ERROR!!!")
                 quit()
+
+    def correct(self):
+        # Sprawdź, czy indeksy (klucze) są zgodne
+        if set(self.G.nodes()) != set(self.labels.keys()):
+            return False
+        for v in self.G.nodes():
+            # Jeśli para (v1, etykieta) nie znajduje się
+            # w słowniku krawędzi drugiego wierzchołka (self.G.edges(v2)),
+            # zwróć False
+            for u, label in self.G.edges(v):
+                if not (v, label) in self.G.edges(u):
+                    return False
+
+        return True
     #from_file - metoda tworząca listę grafów na podstawie pliku o podanej ścieżce.
     #Każdy graf jest reprezentowany przez obiekt klasy Graph.
     #Jest to metoda klasy, więc nie musisz tworzyć obiektu, aby ją wywołać.
@@ -40,5 +56,7 @@ class Graph:
                     edges = [tuple(map(int, edge.split())) for edge in line.split(";")]
                 else:
                     labels = line.split(";")
-                    graphs.append(cls(labels, edges))
-        return graphs
+                    g = cls(labels, edges)
+                    if g.correct():
+                        graphs.append(cls(labels, edges))
+        return graphs # lista grafów z pliku
