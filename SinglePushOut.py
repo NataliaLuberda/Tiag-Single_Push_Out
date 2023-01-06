@@ -19,5 +19,5 @@ def spo(left, right, main):
         main.add_node(i)
     for i in list(right.nodes):
         main.add_edges_from(right.edges(i))
-
+    print(list(main.nodes))
     return main

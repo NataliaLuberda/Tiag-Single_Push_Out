@@ -58,7 +58,7 @@ class Graph:
                 line = line.strip()
                 if line[0] == '(':
                     edges = [tuple(map(int, edge[1:-1].split(','))) for edge in line.split(";")]
-                    print(edges)
+                    # print(edges)
                 else:
                     labels = line.split(";")
                     g = cls(labels, edges)
@@ -66,6 +66,6 @@ class Graph:
                         graphs.append(cls(labels, edges))
         return graphs # lista grafów z pliku
 
-g = Graph.from_file('graph.txt');
-print(g);
+# g = Graph.from_file('graph.txt');
+# print(g);
 
