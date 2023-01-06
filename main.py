@@ -24,19 +24,19 @@ def start():
     which_example = input('Choose example [1, 2]: ')
     if which_example.isdigit() and int(which_example) in [1, 2]:
         graphs = Graph.from_file("example" + which_example + ".txt")
-        start_graph = graphs[0].G
-        draw(start_graph, 'start_graph.png')
+        start_graph = graphs[0]
+        draw(start_graph.G, 'start_graph.png')
         transformation_count = int((len(graphs) - 1) / 2)
         index_transformation_arr = [str(i) for i in range(1, transformation_count + 1)]
         which_transformation = int(input('Choose transformation ' + '[' + ','.join(index_transformation_arr) + ']: '))
-        left = graphs[which_transformation * 2 - 1].G
-        right = graphs[which_transformation * 2].G
+        left = graphs[which_transformation * 2 - 1]
+        right = graphs[which_transformation * 2]
         flag_draw_left = input('draw left side of transformation [y/n] :')
         if flag_draw_left == 'y':
-            draw(left, 'left_side_transformation.png')
+            draw(left.G, 'left_side_transformation.png')
         flag_draw_right = input('draw right side of transformation [y/n] :')
         if flag_draw_right == 'y':
-            draw(right, 'right_side_transformation.png')
+            draw(right.G, 'right_side_transformation.png')
         transformed_graph = SinglePushOut.spo(left, right, start_graph)
         draw(transformed_graph, 'transformed_graph.png')
 
