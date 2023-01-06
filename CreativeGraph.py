@@ -9,9 +9,10 @@ class Graph:
     # Tworzy graf z podanych w argumencie listy etykiet i listy krawędzi.
     def __init__(self, labels, edges):
         self.labels = labels
+        self.edges = edges
         self.G = nx.Graph()
-        for i, label in enumerate(labels):
-            self.G.add_node(i, label = label)
+        for i in range(len(labels)):
+            self.G.add_node(i, label=labels[i])
 
         for edge in edges:
             start, end = edge
@@ -22,8 +23,11 @@ class Graph:
                 quit()
 
     def correct(self):
+        label_set = set()
+        for label in self.labels:
+            label_set.add(label)
         # Sprawdź, czy indeksy (klucze) są zgodne
-        if set(self.G.nodes()) != set(self.labels.keys()):
+        if set(list(map(lambda x: x[1]['label'], self.G.nodes(data=True)))) != label_set:
             return False
         for v in self.G.nodes():
             # Jeśli para (v1, etykieta) nie znajduje się
@@ -52,11 +56,16 @@ class Graph:
         with open(filepath, "r") as f:
             for line in f:
                 line = line.strip()
-                if line[0].isdigit():
-                    edges = [tuple(map(int, edge.split())) for edge in line.split(";")]
+                if line[0] == '(':
+                    edges = [tuple(map(int, edge[1:-1].split(','))) for edge in line.split(";")]
+                    print(edges)
                 else:
                     labels = line.split(";")
                     g = cls(labels, edges)
                     if g.correct():
                         graphs.append(cls(labels, edges))
         return graphs # lista grafów z pliku
+
+g = Graph.from_file('graph.txt');
+print(g);
+
