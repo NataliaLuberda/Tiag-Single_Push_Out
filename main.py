@@ -21,8 +21,8 @@ def draw(main_graph, filename):
 
 
 def start():
-    which_example = input('Choose example [1, 2, 3]: ')
-    if which_example.isdigit() and int(which_example) in [1, 2, 3]:
+    which_example = input('Choose example [1, 2, 3, 4, 5]: ')
+    if which_example.isdigit() and int(which_example) in [1, 2, 3, 4, 5]:
         graphs = Graph.from_file("example" + which_example + ".txt")
         start_graph = graphs[0]
         draw(start_graph.G, 'start_graph.png')
